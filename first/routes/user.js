@@ -4,4 +4,6 @@ const router = express.Router();
 const User = require('../controller/user');
 
 router.post("/signup", User.Signup);
-router.post("/profile", User.upload('avatar'), User.filedata);
+router.post("/profile", User.upload.single('avatar'), User.filedata);
+
+module.exports = router;

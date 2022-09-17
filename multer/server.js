@@ -6,7 +6,8 @@ const upload = multer({
             cb(null, 'uploads')
         },
         filename: (req, file, cb) => {
-            cb(null, Math.random() + '.' + file.mimetype.split('/')[1])
+            req["filename"]=Math.floor(Math.random() * 100000000) + '.' + file.mimetype.split('/')[1]
+            cb(null, req.filename)
         }
     })
 })
@@ -14,9 +15,7 @@ const upload = multer({
 const app = express()
 
 app.post('/profile', upload.single('avatar'), function (req, res, next) {
-    // req.file is the `avatar` file
-    res.send('uploaded')
-    // req.body will hold the text fields, if there were any
+    res.status(200).json({message:'uploaded',data:req.filename})
 })
 
 app.listen(3000);

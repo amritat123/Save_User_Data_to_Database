@@ -11,7 +11,6 @@ const userController = require('./controller/user')
 
 
 app.use(express.json());
-// require('./routes/user');
 const port = 3000
 
 // Connect mongodb
@@ -30,7 +29,9 @@ app.get('/', (req, res) => {
 	res.send('Hello World!')
 });
 
-app.post('/signup', userController.Signup)
+// app.post('/signup', userController.Signup)
+app.use(require('./routes/user'))
+
 
 app.listen(port, () => {
 	console.log(`Server started on port ${port}`)

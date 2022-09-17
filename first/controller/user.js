@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const JWT_TOKEN_KEY = 'this is key';
 const multer = require('multer')
 
-
+//multer
 const upload = multer({
     storage: multer.diskStorage({
         destination: (req, file, cb) => {
