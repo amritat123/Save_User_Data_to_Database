@@ -5,9 +5,29 @@ const bcrypt = require('bcrypt');
 const User = require('../model/user');
 const jwt = require('jsonwebtoken');
 const JWT_TOKEN_KEY = 'this is key';
+const multer = require('multer')
 
+
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: (req, file, cb) => {
+            cb(null, 'uploads')
+        },
+        filename: (req, file, cb) => {
+            req["filename"]=Math.floor(Math.random() * 100000000) + '.' + file.mimetype.split('/')[1]
+            cb(null, req.filename)
+        }
+    })
+})
 
 app.use(express.json);
+
+
+app.post('/profile', upload.single('avatar'), function (req, res, next) {
+    res.status(200).json({message:'uploaded',data:req.filename})
+})
+
+
 
 // for signup user... 
 const Signup = async (req, res) => {
@@ -42,4 +62,9 @@ const Signup = async (req, res) => {
         console.log(err);
     }
 }
-module.exports =  { Signup: Signup };
+
+const filedata = function (req, res, next) {
+    res.status(200).json({message:'uploaded',data:req.filename})
+}
+
+module.exports =  { Signup: Signup, upload: upload, filedata: filedata };
