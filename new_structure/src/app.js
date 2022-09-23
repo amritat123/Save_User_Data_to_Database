@@ -1,3 +1,4 @@
+const { json } = require('express');
 const express = require('express')
 
 
@@ -7,6 +8,11 @@ loader()
 
 
 const app= express();
+app.use(express.json())
+
+const user = require("../src/routes/userRoutes")
+
+app.use("API Runing", user)
 
 
 app.listen(process.env.PORT,()=>{
