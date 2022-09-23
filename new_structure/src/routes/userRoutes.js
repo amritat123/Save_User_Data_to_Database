@@ -1,5 +1,5 @@
 const express = require("express")
-const { register } = require("../controller/userController")
+const register = require("../controller/userController")
 
 
 

@@ -1,26 +1,33 @@
+
 const User = require("../model/userModel");
 
 
-exports.register = async(req,res)=>{
+const Register = async (req,res) => {
     try {
-        const {name,email,password}= req.body
+        const {name,email,password, avatar,phone }= req.body;
 
-        let user = await User.findOne({email})
-        if(user){
-            res.status(200).json({
-                success:true,
-                massage: "user already exist"
-            })
+        if (!(name && email && phone && avatar && password)) {
+            res.status (400).send ('All inputs are required');
         }
-        res.status(201).json({
-            success:true,
-            user
-        })
-        
-    } catch (error) {
-        res.status(400).json({
-            success: false,
-            error
-        })
+
+        const OldUser= await User.findOne( { name });
+
+        if (OldUser) {
+            return res. status (409).send('user already Exits', 'Please login');
+        }
+        // Create User data base
+        const user = new User();
+        user.name = name;
+        user.email= email;
+        user.phone = phone;
+        user.avatar = avatar;
+        await user .save();
+        res.status(204).json(user);
     }
-}
+        catch (err)
+        {
+            console.log(err);
+        }
+};
+
+module.exports = Register;
