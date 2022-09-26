@@ -1,6 +1,7 @@
 
 const User = require("../model/userModel");
-
+const multer= require('../Loader/multer');
+// const loader = require("../Loader");
 
 const Register = async (req,res) => {
     try {
@@ -30,4 +31,5 @@ const Register = async (req,res) => {
         }
 };
 
+module.exports = multer;
 module.exports = Register;
