@@ -12,7 +12,7 @@ app.use(express.json())
 
 const user = require("../src/routes/userRoutes")
 
-app.use("API Runing", user)
+app.use(user)
 
 
 app.listen(process.env.PORT,()=>{
